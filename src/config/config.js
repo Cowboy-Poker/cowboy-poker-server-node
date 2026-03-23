@@ -1,0 +1,36 @@
+import {
+  HTTP_PORT,
+  TCP_PORT,
+  NODE_ENV,
+  CPP_SERVER_HOST,
+  CPP_SERVER_PORT,
+  DB_HOST,
+  DB_PORT,
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
+} from "../constants/env.js";
+
+export const config = {
+  server: {
+    httpPort: HTTP_PORT,
+    tcpPort: TCP_PORT,
+    env: NODE_ENV,
+  },
+  cpp: {
+    host: CPP_SERVER_HOST,
+    port: CPP_SERVER_PORT,
+  },
+  packet: {
+    headerSize: 6,
+    packetTypeSize: 2,
+    totalLengthSize: 4,
+  },
+  db: {
+    host: DB_HOST,
+    port: DB_PORT,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    name: DB_NAME,
+  },
+};
