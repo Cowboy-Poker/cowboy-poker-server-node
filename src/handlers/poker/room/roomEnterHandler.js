@@ -1,6 +1,7 @@
 import { createResponse } from "../../../protobuf/response/createResponse.js";
 import { PACKET_TYPE } from "../../../protobuf/packetTypes.js";
 import { getRoomById } from "../../../session/pokerRoom.js";
+import { startGame } from "../game/gameStartHandler.js";
 
 export const roomEnterHandler = (socket, payload) => {
   const { roomId } = payload;
@@ -47,4 +48,9 @@ export const roomEnterHandler = (socket, payload) => {
 
   // 기존 플레이어들에게도 브로드캐스트
   room.broadcast(joinResponse);
+
+  // 2명 이상이면 자동 게임 시작
+  if (room.getPlayers().length >= 2 && !room.isInGame()) {
+    startGame(room);
+  }
 };

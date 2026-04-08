@@ -44,9 +44,9 @@ export const PACKET_TYPE_MAP = {
     namespace: "poker_request",
     typeName: "C_StartGame",
   },
-  [PACKET_TYPE.S_DEAL_CARDS]: {
+  [PACKET_TYPE.S_START_GAME]: {
     namespace: "poker_response",
-    typeName: "S_DealCards",
+    typeName: "S_StartGame",
   },
   [PACKET_TYPE.C_BET_ACTION]: {
     namespace: "poker_request",

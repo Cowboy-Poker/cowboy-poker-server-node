@@ -8,6 +8,13 @@ export const roomLeaveHandler = (socket, payload) => {
   const room = getRoomList().find((r) => r.getPlayer(userId));
   if (!room) return;
 
+  // 게임 중이면 퇴장 예약 (게임 종료 후 startGame에서 처리)
+  if (room.isInGame()) {
+    room.addPendingLeave(userId);
+    console.log(`[roomLeaveHandler] 퇴장 예약 | roomId=${room.roomId} | userId=${userId}`);
+    return;
+  }
+
   const result = room.removePlayer(userId);
 
   if (result === "empty") {
