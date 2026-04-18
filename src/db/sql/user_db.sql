@@ -19,7 +19,6 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS inventories (
     user_no             INT PRIMARY KEY REFERENCES users(user_no) ON DELETE CASCADE,
     equipped_weapon     INT DEFAULT 0,
-    equipped_ammo       INT DEFAULT 0,
     ammo_rifle_count    INT DEFAULT 0,
     ammo_shotgun_count  INT DEFAULT 0,
     ammo_revolver_count INT DEFAULT 0
@@ -27,8 +26,7 @@ CREATE TABLE IF NOT EXISTS inventories (
 
 CREATE TABLE IF NOT EXISTS poker_stats (
     user_no         INT PRIMARY KEY REFERENCES users(user_no) ON DELETE CASCADE,
-    wins            INT DEFAULT 0,
-    losses          INT DEFAULT 0,
+    wins            INT DEFAULT 0, -- 패배시 아이디 삭제라 필요없음
     total_games     INT DEFAULT 0
 );
 

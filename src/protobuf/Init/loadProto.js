@@ -53,7 +53,7 @@ export const loadProtos = async () => {
     collectMessages("", root);
     Object.freeze(protoMessages);
 
-    console.log("[loadProtos] protoMessages:", protoMessages);
+    // console.log("[loadProtos] protoMessages:", protoMessages);
   } catch (err) {
     console.error("Protobuf 파일 로드 중 오류가 발생했습니다:", err);
   }

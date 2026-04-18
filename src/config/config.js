@@ -9,6 +9,9 @@ import {
   DB_USER,
   DB_PASSWORD,
   DB_NAME,
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_PASSWORD,
 } from "../constants/env.js";
 
 export const config = {
@@ -32,5 +35,10 @@ export const config = {
     user: DB_USER,
     password: DB_PASSWORD,
     name: DB_NAME,
+  },
+  redis: {
+    host: REDIS_HOST,
+    port: REDIS_PORT,
+    password: REDIS_PASSWORD,
   },
 };
