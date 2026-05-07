@@ -1,0 +1,5 @@
+[submodule "Protocols"]
+	path = Protocols
+	url = https://github.com/Cowboy-Poker/cowboy-poker-protocols.git
+[submodule "protocols"]
+	branch = main

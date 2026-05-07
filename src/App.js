@@ -1,8 +1,8 @@
-import express from 'express';
-import http from 'http';
-import { healthCheck } from './controllers/healthController.js';
-import SocketManager from './managers/SocketManager.js';
-import { config } from './config/config.js';
+import express from "express";
+import http from "http";
+import { healthCheck } from "./controllers/healthController.js";
+import SocketManager from "./managers/SocketManager.js";
+import { config } from "./config/config.js";
 
 class App {
   static #instance = null;
@@ -37,12 +37,14 @@ class App {
   }
 
   #registerRoutes() {
-    this.#express.get('/health', healthCheck);
+    this.#express.get("/health", healthCheck);
   }
 
   listen(port) {
     this.#httpServer.listen(port, () => {
-      console.log(`[App] HTTP 서버 시작 | port=${port} | env=${config.server.env}`);
+      console.log(
+        `[App] HTTP 서버 시작 | port=${port} | env=${config.server.env}`,
+      );
     });
   }
 

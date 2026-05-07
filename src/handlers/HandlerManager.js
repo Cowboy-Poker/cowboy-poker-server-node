@@ -1,11 +1,4 @@
-import { PACKET_TYPE } from '../constants/packetType.js';
-
-const handlers = {
-  // [PACKET_TYPE.C_LobbyEnter]: {
-  //   handler: lobbyEnterHandler,
-  //   protoType: 'lobby.C_LobbyEnter',
-  // },
-};
+import { handlers } from "./handlerIndex.js";
 
 class HandlerManager {
   static #instance = null;
@@ -27,10 +20,16 @@ class HandlerManager {
   handle(packetType, socket, payload) {
     const entry = handlers[packetType];
     if (!entry) {
-      console.warn(`[HandlerManager] 등록되지 않은 패킷 타입 | type=0x${packetType.toString(16).padStart(4, '0')}`);
+      console.warn(
+        `[HandlerManager] 등록되지 않은 패킷 타입 | type=0x${packetType.toString(16).padStart(4, "0")}`,
+      );
       return;
     }
-    entry.handler(socket, payload);
+    Promise.resolve(entry(socket, payload)).catch((err) => {
+      console.error(
+        `[HandlerManager] 핸들러 오류 | type=${packetType} | err=${err.message}`,
+      );
+    });
   }
 }
 
