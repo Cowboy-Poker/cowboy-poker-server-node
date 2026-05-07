@@ -21,12 +21,20 @@ export const createUser = async (userId, passwordHash, nickname) => {
      RETURNING *`,
     [userId, passwordHash, nickname],
   );
-  return rows[0];
+  const user = rows[0];
+  await query(`INSERT INTO inventories (user_no) VALUES ($1)`, [user.user_no]);
+  return user;
 };
 
-export const updateLastLogin = async (userId) => {
-  await query(
-    `UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE user_id = $1`,
+export const updateLastLoginAndGetUser = async (userId) => {
+  const { rows } = await query(
+    `WITH updated AS (
+       UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE user_id = $1 RETURNING *
+     )
+     SELECT u.*, i.equipped_weapon, i.ammo_rifle_count, i.ammo_shotgun_count, i.ammo_revolver_count
+     FROM updated u
+     LEFT JOIN inventories i ON u.user_no = i.user_no`,
     [userId],
   );
+  return rows[0] ?? null;
 };

@@ -15,6 +15,13 @@ import {
 } from "../constants/env.js";
 
 export const config = {
+  bcrypt: {
+    saltRounds: 10,
+  },
+  poker: {
+    betTimeLimitSec: 300, // 베팅 제한 시간 (초)
+    nextGameDelayMs: 10000, // 게임 종료 후 다음 게임 시작까지 대기 (ms)
+  },
   server: {
     httpPort: HTTP_PORT,
     tcpPort: TCP_PORT,

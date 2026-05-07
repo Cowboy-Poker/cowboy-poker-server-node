@@ -1,16 +1,21 @@
 import { createClient } from "redis";
 import { config } from "../../config/config.js";
 
+var redisClient = null;
+
 export async function initRedis() {
-  const client = createClient({
+  redisClient = createClient({
     url: `redis://${config.redis.host}:${config.redis.port}`,
   });
 
-  client.on("error", (err) => {
+  redisClient.on("error", (err) => {
     console.error("[Redis] 연결 오류:", err);
   });
 
-  await client.connect();
+  await redisClient.connect();
   console.log("[Redis] 연결 성공");
-  return client;
 }
+
+export const getRedisClient = () => {
+  return redisClient;
+};

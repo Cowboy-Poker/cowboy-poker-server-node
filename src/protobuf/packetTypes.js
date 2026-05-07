@@ -68,4 +68,8 @@ export const PACKET_TYPE_MAP = {
     namespace: "poker_response",
     typeName: "S_GameResult",
   },
+  [PACKET_TYPE.S_NOTICE]: {
+    namespace: "poker_response",
+    typeName: "S_Notice",
+  },
 };

@@ -2,6 +2,7 @@ export class Room {
   #roomId;
   #roomName;
   #maxPlayers;
+  /** 테이블 스테이크 = 빅 블라인드(C_CreateRoom.blindAmount와 동일). SB는 항상 floor(BB/2). */
   #blindAmount;
   #slots; // 1~5번 슬롯, 인덱스 0~4
   #state; // 0: WAITING, 1: IN_GAME
@@ -31,6 +32,12 @@ export class Room {
 
   // 입장 순서대로 빈 슬롯(1번부터) 배정
   addPlayer(userId, socket) {
+    // 이미 방에 있는 플레이어면 중복 입장 방지
+    if (this.#slots.some((s) => s?.userId === userId)) {
+      console.warn(`[addPlayer] 중복 입장 시도 | userId=${userId}`);
+      return false;
+    }
+
     const slotIndex = this.#slots.findIndex((s) => s === null);
     if (slotIndex === -1) return false;
 
@@ -83,7 +90,7 @@ export class Room {
   broadcast(buffer, excludeUserId = null) {
     for (const player of this.getPlayers()) {
       if (player.userId !== excludeUserId) {
-        player.socket.write(buffer);
+        player.socket.write(Buffer.from(buffer));
       }
     }
   }
@@ -209,12 +216,34 @@ export class Room {
     this.#gameState = null;
   }
 
-  get roomId() { return this.#roomId; }
-  get hostUserId() { return this.#slots.find((s) => s !== null)?.userId ?? null; }
-  get sbSeat() { return this.#sbSeat; }
-  get bbSeat() { return this.#bbSeat; }
-  get blindAmount() { return this.#blindAmount; }
-  get gameState() { return this.#gameState; }
-  get isFirstGame() { return this.#isFirstGame; }
-  set isFirstGame(v) { this.#isFirstGame = v; }
+  get roomId() {
+    return this.#roomId;
+  }
+  get hostUserId() {
+    return this.#slots.find((s) => s !== null)?.userId ?? null;
+  }
+  get sbSeat() {
+    return this.#sbSeat;
+  }
+  get bbSeat() {
+    return this.#bbSeat;
+  }
+  get blindAmount() {
+    return this.#blindAmount;
+  }
+  get bigBlind() {
+    return this.#blindAmount;
+  }
+  get smallBlind() {
+    return Math.max(1, Math.floor(this.#blindAmount / 2));
+  }
+  get gameState() {
+    return this.#gameState;
+  }
+  get isFirstGame() {
+    return this.#isFirstGame;
+  }
+  set isFirstGame(v) {
+    this.#isFirstGame = v;
+  }
 }

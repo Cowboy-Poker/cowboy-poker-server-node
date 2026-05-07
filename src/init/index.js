@@ -4,6 +4,6 @@ import { initRedis } from "../db/redis/redis.js";
 
 export const initServer = async () => {
   await loadProtos();
-  //   await initDatabase();
+  await initDatabase();
   await initRedis();
 };

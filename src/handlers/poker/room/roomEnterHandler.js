@@ -3,7 +3,7 @@ import { PACKET_TYPE } from "../../../protobuf/packetTypes.js";
 import { getRoomById } from "../../../session/pokerRoom.js";
 import { startGame } from "../game/gameStartHandler.js";
 
-export const roomEnterHandler = (socket, payload) => {
+export const roomEnterHandler = async (socket, payload) => {
   const { roomId } = payload;
 
   const room = getRoomById(roomId);
@@ -51,6 +51,6 @@ export const roomEnterHandler = (socket, payload) => {
 
   // 2명 이상이면 자동 게임 시작
   if (room.getPlayers().length >= 2 && !room.isInGame()) {
-    startGame(room);
+    await startGame(room);
   }
 };
